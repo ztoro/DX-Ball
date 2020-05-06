@@ -2,34 +2,49 @@
 
 public class Ball {
  
-  private int y = 300;
-  private boolean to_down = true;
+  int y = 500;
+  boolean to_down = false;
   
-  private int x = 400;
-  private boolean to_right = true;
+  int x = 400;
+  boolean to_right = true;
   
-  private int radius = 10;
-  private int speed = 5;
+  int radius = 10;
+  int speed = 5;
   
-  public void draw() {
-    fill(0, 255, 0); 
+  void draw() {
+    fill(128); 
     circle(x, y, radius*2);
   }
   
-  public void move() {
-    update_y();
-    update_x();
+  boolean isFallen() {
+    if (ball.y > 600) {
+      return true;
+    } else {
+      return false;
+    }
   }
   
-  public void changeDirection () {
+  void reset() {
+    ball.y = 500;
+    ball.x = 400;
+    ball.to_down = false;
+  }
+  
+  void move() {
+    updateY();
+    updateX();
+  }
+  
+  void changeDirection () {
     if (to_down == true) {
       to_down = false; 
     } else {
       to_down = true;
     }
+    this.move();
   }
     
-  private void update_x() {
+  void updateX() {
      if (to_right == true & x != 800-radius) {
         x = x+speed;
      } else if (x == 800-radius) {
@@ -43,12 +58,9 @@ public class Ball {
      }
   }
 
-  private void update_y() {
-    if (to_down == true & y != 600-radius) {
+  void updateY() {
+    if (to_down == true) {
         y = y+speed;
-     } else if (y == 600-radius) {
-       to_down = false;
-       y = y-speed;
      } else if (to_down == false & y != radius) {
        y = y-speed;
      } else if (to_down == false & y == radius) {
